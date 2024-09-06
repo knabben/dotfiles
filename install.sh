@@ -6,7 +6,7 @@ USER=aknabben
 # Install default required packages
 sudo apt-get update
 sudo apt-get -y upgrade
-sudo apt-get -y install tmux vim zsh make python3 python3-pip ipython fzf jq
+sudo apt-get -y install tmux vim zsh make python3 python3-pip ipython fzf jq unzip
 
 # Set ZSH
 chsh -s /bin/zsh
