@@ -10,10 +10,15 @@ else
   export VISUAL=vim
 fi
 
-# Pager — bat if available for syntax-highlighted output
-(( $+commands[bat] )) && export PAGER=bat
+# Pager — bat if available; Ubuntu/Debian ships it as 'batcat'
+if (( $+commands[bat] )); then
+  export PAGER=bat
+elif (( $+commands[batcat] )); then
+  alias bat=batcat
+  export PAGER=batcat
+fi
 
-# bat theme (Catppuccin Mocha)
+# bat/batcat theme (Catppuccin Mocha)
 export BAT_THEME="Catppuccin-mocha"
 
 # History

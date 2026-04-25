@@ -69,10 +69,29 @@ PACKAGES=(
   "curl"
   "git"
   "zoxide"
-  "starship"
   "eza"
   "neovim:nvim"
 )
+
+# ── Starship (official install script — not in Ubuntu apt repos) ───────────────
+install_starship() {
+  if command -v starship &>/dev/null; then
+    skip "starship already installed ($(starship --version 2>/dev/null | head -1))"
+    return
+  fi
+  if $DRY_RUN; then
+    echo "  [dry-run] curl -sS https://starship.rs/install.sh | sudo sh -s -- --yes"
+    return
+  fi
+  echo
+  echo -e "${BOLD}── Installing Starship ──────────────────────────────────────────${RESET}"
+  if curl -sS https://starship.rs/install.sh | sudo sh -s -- --yes &>/dev/null; then
+    ok "starship installed (official script)"
+  else
+    warn "starship install failed — install manually: curl -sS https://starship.rs/install.sh | sudo sh"
+    ACTION_ITEMS+=("Install starship: curl -sS https://starship.rs/install.sh | sudo sh")
+  fi
+}
 
 install_package() {
   local apt_name snap_name
@@ -253,6 +272,7 @@ main() {
 
   if ! $SKIP_PACKAGES; then
     install_packages
+    install_starship
     install_omz
     install_tpm
   fi
