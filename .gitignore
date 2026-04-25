@@ -8,6 +8,9 @@
 .zshrc.local
 .aliases.local
 
+# Claude Code local session settings (machine-specific permission allowlists)
+.claude/settings.local.json
+
 # Editor and OS artifacts
 .DS_Store
 *.swp
