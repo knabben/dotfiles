@@ -1,5 +1,5 @@
 # ── System aliases ────────────────────────────────────────────────────────────
-if command -v eza &>/dev/null; then
+if (( $+commands[eza] )); then
   alias ll='eza -la --icons --git'      # original: \ls -la
   alias la='eza -a --icons'             # original: \ls -a
   alias l='eza --icons'                 # original: \ls

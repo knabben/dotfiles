@@ -16,12 +16,11 @@ bindkey '^[[C' forward-char
 # Ctrl+T  fuzzy file insert
 # Alt+C   fuzzy cd into subdirectory
 # (Populated in US3 — Productivity phase)
-if command -v fzf &>/dev/null; then
+if (( $+commands[fzf] )); then
   local _fzf_key_bindings
   for _fzf_key_bindings in \
     /usr/share/doc/fzf/examples/key-bindings.zsh \
-    /usr/share/fzf/key-bindings.zsh \
-    "$(brew --prefix 2>/dev/null)/opt/fzf/shell/key-bindings.zsh"
+    /usr/share/fzf/key-bindings.zsh
   do
     [[ -f "$_fzf_key_bindings" ]] && { source "$_fzf_key_bindings"; break; }
   done

@@ -1,6 +1,12 @@
 # ── PATH ─────────────────────────────────────────────────────────────────────
 # All $PATH modifications live here and nowhere else.
 
+# WSL2: strip Windows paths (/mnt/c/...) — slow 9P stat calls tank command lookups.
+# Windows tools remain accessible by full path or by re-adding entries to ~/.zshrc.local.
+if [[ -n "$WSL_DISTRO_NAME" ]]; then
+  path=("${(@)path:#/mnt/*}")
+fi
+
 # System / Snap
 [[ -d /snap/bin ]] && export PATH="$PATH:/snap/bin"
 

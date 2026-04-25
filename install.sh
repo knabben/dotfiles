@@ -165,6 +165,7 @@ install_tpm() {
 # ── Symlink management ────────────────────────────────────────────────────────
 # Format: "repo-relative-source:home-relative-target"
 SYMLINKS=(
+  "zsh/.zshenv:.zshenv"
   "zsh/.zshrc:.zshrc"
   "tmux/.tmux.conf:.tmux.conf"
   "starship/starship.toml:.config/starship.toml"

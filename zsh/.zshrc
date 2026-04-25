@@ -2,7 +2,7 @@
 # Sources modules in strict order. Do NOT source other modules inside modules.
 # See zsh/ for individual concerns.
 
-ZDOTDIR="${ZDOTDIR:-$(dirname "${(%):-%x}")}"
+ZDOTDIR="${ZDOTDIR:-$HOME/dotfiles/zsh}"
 
 source "$ZDOTDIR/path.zsh"
 source "$ZDOTDIR/env.zsh"

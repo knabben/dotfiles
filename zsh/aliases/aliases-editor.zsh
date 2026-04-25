@@ -1,5 +1,5 @@
 # ── Editor aliases ────────────────────────────────────────────────────────────
-if command -v nvim &>/dev/null; then
+if (( $+commands[nvim] )); then
   alias vim='nvim'    # original: \vim
   alias vi='nvim'     # original: \vi
   alias v='nvim'

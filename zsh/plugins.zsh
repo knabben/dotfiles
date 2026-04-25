@@ -2,6 +2,8 @@
 export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME=""  # Theme disabled — Starship handles the prompt
+# Let completions.zsh own compinit exclusively to avoid the slow compaudit in OMZ
+skip_global_compinit=1
 
 plugins=(
   git
