@@ -115,7 +115,7 @@ in error color; type `z dot` and confirm navigation to `~/dotfiles`.
 - [x] T032 [US3] Update `zsh/.zshrc` orchestrator: add `for f in "$ZDOTDIR/aliases/"aliases-*.zsh; do source "$f"; done` loop after `plugins.zsh` sourcing; source `~/.aliases.local` if it exists
 - [x] T033 [US3] Update `zsh/keybindings.zsh`: add fzf shell integration — source fzf keybindings file (`/usr/share/doc/fzf/examples/key-bindings.zsh` or `$(brew --prefix)/opt/fzf/shell/...`); bind `Ctrl+R` for fuzzy history, `Ctrl+T` for fuzzy file insert, `Alt+C` for fuzzy `cd`; guard with `command -v fzf`
 - [x] T034 [US3] Update `zsh/prompt.zsh`: add `eval "$(zoxide init zsh)"` after Starship init; guard with `command -v zoxide`
-- [ ] T035 [US3] Smoke test all alias domains: open fresh Zsh session; run `type gs` → must show git status alias; run `type ll` → must show eza alias; run `type dps` → must show docker ps alias; run `type vim` → must show nvim alias; run `z dot` → must navigate to `~/dotfiles`; run `Ctrl+R` → fzf history widget must open
+- [x] T035 [US3] Smoke test all alias domains: open fresh Zsh session; run `type gs` → must show git status alias; run `type ll` → must show eza alias; run `type dps` → must show docker ps alias; run `type vim` → must show nvim alias; run `z dot` → must navigate to `~/dotfiles`; run `Ctrl+R` → fzf history widget must open
 
 **Checkpoint**: User Story 3 fully functional — inline suggestions, syntax highlighting, all
 alias domains, fzf keybindings, and zoxide all work in a fresh shell session.
@@ -151,7 +151,7 @@ environment and uses three tools correctly without external help.
 **Purpose**: Verify all constitution gates pass; harden the environment against regressions.
 
 - [x] T043 [P] Constitution gate — Performance: run `time zsh -i -c exit` 10 consecutive times; all runs MUST be ≤200ms; if any exceed threshold run `zsh -i -c "zprof; exit"` to identify culprit and move to `zsh/lazy.zsh`
-- [ ] T044 Constitution gate — Idempotency: run `install.sh` on an already-configured machine; confirm second run emits only `[SKIP]` lines for all existing correct symlinks; confirm no packages are reinstalled; confirm exit code 0
+- [x] T044 Constitution gate — Idempotency: run `install.sh` on an already-configured machine; confirm second run emits only `[SKIP]` lines for all existing correct symlinks; confirm no packages are reinstalled; confirm exit code 0
 - [x] T045 [P] Constitution gate — Alias conflict check: verify no name in any `zsh/aliases/*.zsh` file appears in the forbidden list from `contracts/alias-naming.md` (`cd`, `pwd`, `export`, `source`, `.`, `eval`, `exec`, `exit`, `kill`, `sudo`, `su`) or collides with required tool names
 - [x] T046 [P] Constitution gate — Cross-section isolation: for each file in `zsh/*.zsh`, comment it out individually and run `zsh --no-rcs -c "source zsh/.zshrc; exit"` on the remaining files; confirm no remaining module errors
 - [ ] T047 Constitution gate — Interactive smoke test: open a brand new Zsh terminal session; verify: prompt renders in Catppuccin Mocha colors, typing `git` partial shows autosuggestion, typing `gti` shows red error highlight, `z dot` navigates to `~/dotfiles`, `Ctrl+R` opens fzf history widget, `tmux` opens with themed status bar
