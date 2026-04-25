@@ -104,6 +104,12 @@ install_package() {
     return 0
   fi
 
+  # Skip if already installed at the candidate version
+  if dpkg-query -W -f='${Status}' "$apt_name" 2>/dev/null | grep -q "install ok installed"; then
+    skip "$apt_name already installed"
+    return 0
+  fi
+
   if sudo apt-get install -y "$apt_name" &>/dev/null 2>&1; then
     ok "Installed $apt_name (apt)"
     return 0
