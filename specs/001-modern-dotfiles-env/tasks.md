@@ -150,10 +150,10 @@ environment and uses three tools correctly without external help.
 
 **Purpose**: Verify all constitution gates pass; harden the environment against regressions.
 
-- [ ] T043 [P] Constitution gate — Performance: run `time zsh -i -c exit` 10 consecutive times; all runs MUST be ≤200ms; if any exceed threshold run `zsh -i -c "zprof; exit"` to identify culprit and move to `zsh/lazy.zsh`
+- [x] T043 [P] Constitution gate — Performance: run `time zsh -i -c exit` 10 consecutive times; all runs MUST be ≤200ms; if any exceed threshold run `zsh -i -c "zprof; exit"` to identify culprit and move to `zsh/lazy.zsh`
 - [ ] T044 Constitution gate — Idempotency: run `install.sh` on an already-configured machine; confirm second run emits only `[SKIP]` lines for all existing correct symlinks; confirm no packages are reinstalled; confirm exit code 0
-- [ ] T045 [P] Constitution gate — Alias conflict check: verify no name in any `zsh/aliases/*.zsh` file appears in the forbidden list from `contracts/alias-naming.md` (`cd`, `pwd`, `export`, `source`, `.`, `eval`, `exec`, `exit`, `kill`, `sudo`, `su`) or collides with required tool names
-- [ ] T046 [P] Constitution gate — Cross-section isolation: for each file in `zsh/*.zsh`, comment it out individually and run `zsh --no-rcs -c "source zsh/.zshrc; exit"` on the remaining files; confirm no remaining module errors
+- [x] T045 [P] Constitution gate — Alias conflict check: verify no name in any `zsh/aliases/*.zsh` file appears in the forbidden list from `contracts/alias-naming.md` (`cd`, `pwd`, `export`, `source`, `.`, `eval`, `exec`, `exit`, `kill`, `sudo`, `su`) or collides with required tool names
+- [x] T046 [P] Constitution gate — Cross-section isolation: for each file in `zsh/*.zsh`, comment it out individually and run `zsh --no-rcs -c "source zsh/.zshrc; exit"` on the remaining files; confirm no remaining module errors
 - [ ] T047 Constitution gate — Interactive smoke test: open a brand new Zsh terminal session; verify: prompt renders in Catppuccin Mocha colors, typing `git` partial shows autosuggestion, typing `gti` shows red error highlight, `z dot` navigates to `~/dotfiles`, `Ctrl+R` opens fzf history widget, `tmux` opens with themed status bar
 - [ ] T048 Constitution gate — Peer usability: provide README to one developer unfamiliar with the dotfiles; record whether they successfully install and use 3 tools without external help; update README if any step causes confusion
 
