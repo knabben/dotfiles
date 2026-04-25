@@ -19,7 +19,7 @@ testing of each increment.
 
 **Purpose**: Create the repository directory skeleton required by all phases.
 
-- [ ] T001 Create dotfiles directory structure: `zsh/`, `zsh/aliases/`, `tmux/`, `starship/`
+- [x] T001 Create dotfiles directory structure: `zsh/`, `zsh/aliases/`, `tmux/`, `starship/`
 
 ---
 
@@ -30,9 +30,9 @@ All modules must exist (even as stubs) before later tasks can append to them.
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T002 Write `zsh/.zshrc` module orchestrator: source `path.zsh`, `env.zsh`, `plugins.zsh`, `completions.zsh`, `keybindings.zsh`, `lazy.zsh`, `prompt.zsh`, and all files in `zsh/aliases/` — in that order; add `~/.zshrc.local` and `~/.aliases.local` sourcing at the end if files exist
-- [ ] T003 [P] Write `zsh/path.zsh` stub: declare `$PATH` block comment headers per domain (system, snap, local bin); add `$HOME/.local/bin` and `/snap/bin` entries
-- [ ] T004 [P] Write `zsh/env.zsh` stub: declare `export` block with `BAT_THEME`, `EDITOR`, `VISUAL`, and `PAGER` headers (values populated in later phases)
+- [x] T002 Write `zsh/.zshrc` module orchestrator: source `path.zsh`, `env.zsh`, `plugins.zsh`, `completions.zsh`, `keybindings.zsh`, `lazy.zsh`, `prompt.zsh`, and all files in `zsh/aliases/` — in that order; add `~/.zshrc.local` and `~/.aliases.local` sourcing at the end if files exist
+- [x] T003 [P] Write `zsh/path.zsh` stub: declare `$PATH` block comment headers per domain (system, snap, local bin); add `$HOME/.local/bin` and `/snap/bin` entries
+- [x] T004 [P] Write `zsh/env.zsh` stub: declare `export` block with `BAT_THEME`, `EDITOR`, `VISUAL`, and `PAGER` headers (values populated in later phases)
 
 **Checkpoint**: Shell entry-point exists and sources empty module files without error — `zsh .zshrc` must exit cleanly.
 
@@ -49,20 +49,20 @@ point into the repo; confirm startup benchmark ≤200ms.
 
 ### Implementation for User Story 1
 
-- [ ] T005 [US1] Write `install.sh` header and argument parsing: `--dry-run`, `--yes`, `--skip-packages` flags per `contracts/install-script.md`; emit colored `[OK]` / `[SKIP]` / `[WARN]` / `[ERROR]` / `[SNAP]` / `[ACTION REQUIRED]` prefixes
-- [ ] T006 [US1] Add package installation loop to `install.sh`: iterate declared package list; attempt `apt-get install -y <pkg>`; on failure emit `[SNAP]` and attempt `snap install <pkg>`; on snap failure emit `[WARN]` and add to post-install summary
-- [ ] T007 [US1] Add snap availability guard to `install.sh`: check `snapd` is running before any snap fallback; print one-time warning and skip all snap installs for the run if unavailable
-- [ ] T008 [US1] Add symlink creation logic to `install.sh`: for each managed dotfile in the canonical list (`contracts/install-script.md`), check if target exists; if target is already the correct symlink print `[SKIP]`; if target exists and is not a symlink prompt user (`[dotfiles] ~/.file already exists. Overwrite? [y/N]:`); on confirm remove and symlink; on decline print `[SKIP]` and continue
-- [ ] T009 [US1] Add Oh My Zsh install step to `install.sh`: check if `~/.oh-my-zsh` exists; if not, clone Oh My Zsh repository into `~/.oh-my-zsh`; print `[OK]` or `[SKIP]`
-- [ ] T010 [US1] Add post-install summary to `install.sh`: collect all failed and `[ACTION REQUIRED]` items; print them at the end of the run; exit with code 0 even if some steps were skipped
-- [ ] T011 [US1] Write `zsh/plugins.zsh`: set `ZSH` to `$HOME/.oh-my-zsh`; declare `plugins=(git zsh-autosuggestions zsh-syntax-highlighting)`; source `$ZSH/oh-my-zsh.sh`
-- [ ] T012 [US1] Write `zsh/completions.zsh`: call `autoload -Uz compinit` and `compinit`; set `zstyle` options for case-insensitive matching and menu completion
-- [ ] T013 [US1] Write `zsh/keybindings.zsh` base bindings: set `bindkey -e` (emacs mode); bind Home/End/Delete keys; leave fzf keybinding slots as comments (populated in US3)
-- [ ] T014 [US1] Write `zsh/lazy.zsh`: add self-replacing lazy load shims for `nvm`, `pyenv`, and `rbenv` — each shim unsetting itself and sourcing the real init on first invocation
-- [ ] T015 [US1] Write `zsh/prompt.zsh` base: add `eval "$(starship init zsh)"` guarded by `command -v starship`; leave zoxide slot as a comment (populated in US3)
-- [ ] T016 [US1] Update `zsh/path.zsh` with tool-specific `$PATH` entries: `$HOME/go/bin`, `/usr/local/go/bin`, `$HOME/.cargo/bin` as conditional appends (only if directory exists)
-- [ ] T017 [US1] Run `install.sh --dry-run` and confirm output matches contract; then run full install on the environment and verify all symlinks resolve, all packages present, shell opens without errors
-- [ ] T018 [US1] Benchmark `time zsh -i -c exit` five times; if any run exceeds 200ms, profile with `zsh -i -c "zprof; exit"` and move offending init into `zsh/lazy.zsh`
+- [x] T005 [US1] Write `install.sh` header and argument parsing: `--dry-run`, `--yes`, `--skip-packages` flags per `contracts/install-script.md`; emit colored `[OK]` / `[SKIP]` / `[WARN]` / `[ERROR]` / `[SNAP]` / `[ACTION REQUIRED]` prefixes
+- [x] T006 [US1] Add package installation loop to `install.sh`: iterate declared package list; attempt `apt-get install -y <pkg>`; on failure emit `[SNAP]` and attempt `snap install <pkg>`; on snap failure emit `[WARN]` and add to post-install summary
+- [x] T007 [US1] Add snap availability guard to `install.sh`: check `snapd` is running before any snap fallback; print one-time warning and skip all snap installs for the run if unavailable
+- [x] T008 [US1] Add symlink creation logic to `install.sh`: for each managed dotfile in the canonical list (`contracts/install-script.md`), check if target exists; if target is already the correct symlink print `[SKIP]`; if target exists and is not a symlink prompt user (`[dotfiles] ~/.file already exists. Overwrite? [y/N]:`); on confirm remove and symlink; on decline print `[SKIP]` and continue
+- [x] T009 [US1] Add Oh My Zsh install step to `install.sh`: check if `~/.oh-my-zsh` exists; if not, clone Oh My Zsh repository into `~/.oh-my-zsh`; print `[OK]` or `[SKIP]`
+- [x] T010 [US1] Add post-install summary to `install.sh`: collect all failed and `[ACTION REQUIRED]` items; print them at the end of the run; exit with code 0 even if some steps were skipped
+- [x] T011 [US1] Write `zsh/plugins.zsh`: set `ZSH` to `$HOME/.oh-my-zsh`; declare `plugins=(git zsh-autosuggestions zsh-syntax-highlighting)`; source `$ZSH/oh-my-zsh.sh`
+- [x] T012 [US1] Write `zsh/completions.zsh`: call `autoload -Uz compinit` and `compinit`; set `zstyle` options for case-insensitive matching and menu completion
+- [x] T013 [US1] Write `zsh/keybindings.zsh` base bindings: set `bindkey -e` (emacs mode); bind Home/End/Delete keys; leave fzf keybinding slots as comments (populated in US3)
+- [x] T014 [US1] Write `zsh/lazy.zsh`: add self-replacing lazy load shims for `nvm`, `pyenv`, and `rbenv` — each shim unsetting itself and sourcing the real init on first invocation
+- [x] T015 [US1] Write `zsh/prompt.zsh` base: add `eval "$(starship init zsh)"` guarded by `command -v starship`; leave zoxide slot as a comment (populated in US3)
+- [x] T016 [US1] Update `zsh/path.zsh` with tool-specific `$PATH` entries: `$HOME/go/bin`, `/usr/local/go/bin`, `$HOME/.cargo/bin` as conditional appends (only if directory exists)
+- [x] T017 [US1] Run `install.sh --dry-run` and confirm output matches contract; then run full install on the environment and verify all symlinks resolve, all packages present, shell opens without errors
+- [x] T018 [US1] Benchmark `time zsh -i -c exit` five times; if any run exceeds 200ms, profile with `zsh -i -c "zprof; exit"` and move offending init into `zsh/lazy.zsh`
 
 **Checkpoint**: User Story 1 fully functional — `bash install.sh` installs and configures the
 environment; new Zsh session opens cleanly; startup ≤200ms.
