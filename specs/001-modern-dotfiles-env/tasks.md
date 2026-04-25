@@ -80,13 +80,13 @@ all in Catppuccin Mocha colors; verify no mouse required for any action.
 
 ### Implementation for User Story 2
 
-- [ ] T019 [P] [US2] Write `starship/starship.toml`: set `add_newline = false`; configure prompt modules (directory, git_branch, git_status, cmd_duration, character) using Catppuccin Mocha hex values from `data-model.md` theme table
-- [ ] T020 [P] [US2] Update `zsh/plugins.zsh`: add `ZSH_HIGHLIGHT_STYLES` map entries using Catppuccin Mocha hex codes for `command`, `unknown-token`, `path`, `globbing`, `single-quoted-argument`, `double-quoted-argument`
-- [ ] T021 [P] [US2] Update `zsh/env.zsh`: set `export BAT_THEME="Catppuccin-mocha"`; set `export EDITOR=nvim` (fallback `vim` if nvim absent); set `export PAGER=bat`
-- [ ] T022 [US2] Write `tmux/.tmux.conf`: set prefix to `Ctrl+a`; bind `|` to split-window horizontal; bind `-` to split-window vertical; bind `h`/`l` for window navigation; bind `hjkl` for pane navigation; set `mouse off`; bind `<prefix>+m` to toggle mouse; set `default-terminal "screen-256color"`; set `terminal-overrides "xterm-256color:Tc"` for true color
-- [ ] T023 [US2] Add TPM plugin declarations to `tmux/.tmux.conf`: `set -g @plugin 'tmux-plugins/tpm'`; `set -g @plugin 'tmux-plugins/tmux-sensible'`; `set -g @plugin 'catppuccin/tmux'`; set `@catppuccin_flavor 'mocha'`; configure status bar to show session, windows, host, time; add `run '~/.tmux/plugins/tpm/tpm'` at end of file
-- [ ] T024 [US2] Add TPM bootstrap step to `install.sh`: after Oh My Zsh install, check if `~/.tmux/plugins/tpm` exists; if not, clone TPM repository; print `[OK]` / `[SKIP]`; print `[ACTION REQUIRED]` notice to press `<prefix>+I` in tmux to install plugins
-- [ ] T025 [US2] Add `tmux/.tmux.conf` to managed symlinks list in `install.sh` (target: `~/.tmux.conf`); add `starship/starship.toml` to managed symlinks list (target: `~/.config/starship.toml`); create `~/.config/` if not present
+- [x] T019 [P] [US2] Write `starship/starship.toml`: set `add_newline = false`; configure prompt modules (directory, git_branch, git_status, cmd_duration, character) using Catppuccin Mocha hex values from `data-model.md` theme table
+- [x] T020 [P] [US2] Update `zsh/plugins.zsh`: add `ZSH_HIGHLIGHT_STYLES` map entries using Catppuccin Mocha hex codes for `command`, `unknown-token`, `path`, `globbing`, `single-quoted-argument`, `double-quoted-argument`
+- [x] T021 [P] [US2] Update `zsh/env.zsh`: set `export BAT_THEME="Catppuccin-mocha"`; set `export EDITOR=nvim` (fallback `vim` if nvim absent); set `export PAGER=bat`
+- [x] T022 [US2] Write `tmux/.tmux.conf`: set prefix to `Ctrl+a`; bind `|` to split-window horizontal; bind `-` to split-window vertical; bind `h`/`l` for window navigation; bind `hjkl` for pane navigation; set `mouse off`; bind `<prefix>+m` to toggle mouse; set `default-terminal "screen-256color"`; set `terminal-overrides "xterm-256color:Tc"` for true color
+- [x] T023 [US2] Add TPM plugin declarations to `tmux/.tmux.conf`: `set -g @plugin 'tmux-plugins/tpm'`; `set -g @plugin 'tmux-plugins/tmux-sensible'`; `set -g @plugin 'catppuccin/tmux'`; set `@catppuccin_flavor 'mocha'`; configure status bar to show session, windows, host, time; add `run '~/.tmux/plugins/tpm/tpm'` at end of file
+- [x] T024 [US2] Add TPM bootstrap step to `install.sh`: after Oh My Zsh install, check if `~/.tmux/plugins/tpm` exists; if not, clone TPM repository; print `[OK]` / `[SKIP]`; print `[ACTION REQUIRED]` notice to press `<prefix>+I` in tmux to install plugins
+- [x] T025 [US2] Add `tmux/.tmux.conf` to managed symlinks list in `install.sh` (target: `~/.tmux.conf`); add `starship/starship.toml` to managed symlinks list (target: `~/.config/starship.toml`); create `~/.config/` if not present
 - [ ] T026 [US2] Live tmux test: open tmux session; create 2 windows, 3 split panes; rename session; detach with `<prefix>+d`; reattach with `tmux attach`; verify status bar renders Catppuccin theme with correct fields; verify all pane/window operations work without mouse
 
 **Checkpoint**: User Story 2 fully functional — tmux opens with Catppuccin Mocha theme;
@@ -107,14 +107,14 @@ in error color; type `z dot` and confirm navigation to `~/dotfiles`.
 
 ### Implementation for User Story 3
 
-- [ ] T027 [US3] Write `zsh/aliases/aliases-git.zsh`: define `gs`→`git status`, `gd`→`git diff`, `gco`→`git checkout`, `gst`→`git stash`, `glog`→`git log --oneline --graph`, `gpush`→`git push`, `gpull`→`git pull`, `gaa`→`git add -A`, `gcm`→`git commit -m`, `gb`→`git branch`, `gbd`→`git branch -d`, `grb`→`git rebase`, `gcp`→`git cherry-pick`, `gsh`→`git show`, `gbl`→`git blame` — include `# g* prefix` domain header comment
-- [ ] T028 [P] [US3] Write `zsh/aliases/aliases-system.zsh`: `ll`→`eza -la --icons` (comment: `# original: \ls`), `la`→`eza -a --icons`, `l`→`eza --icons`, `df`→`df -h`, `du`→`du -sh`, `free`→`free -h`, `psg`→`ps aux | grep`, `mkd`→`mkdir -p` — guard eza aliases with `command -v eza` check, fallback to `ls -la`
-- [ ] T029 [P] [US3] Write `zsh/aliases/aliases-nav.zsh`: `..`→`cd ..`, `...`→`cd ../..`, `....`→`cd ../../..`, `~`→`cd $HOME`, `dl`→`cd ~/Downloads`, `dt`→`cd ~/Desktop`, `dot`→`cd ~/dotfiles`
-- [ ] T030 [P] [US3] Write `zsh/aliases/aliases-docker.zsh`: `dps`→`docker ps`, `dpsa`→`docker ps -a`, `dex`→`docker exec -it`, `drm`→`docker rm`, `dri`→`docker rmi`, `dlog`→`docker logs -f`, `dstop`→`docker stop`, `dprune`→`docker system prune -f` — include `# d* prefix` domain header comment
-- [ ] T031 [P] [US3] Write `zsh/aliases/aliases-editor.zsh`: `vim`→`nvim` (comment: `# original: \vim`), `v`→`nvim`, `e`→`$EDITOR` — guard with `command -v nvim` check
-- [ ] T032 [US3] Update `zsh/.zshrc` orchestrator: add `for f in "$ZDOTDIR/aliases/"aliases-*.zsh; do source "$f"; done` loop after `plugins.zsh` sourcing; source `~/.aliases.local` if it exists
-- [ ] T033 [US3] Update `zsh/keybindings.zsh`: add fzf shell integration — source fzf keybindings file (`/usr/share/doc/fzf/examples/key-bindings.zsh` or `$(brew --prefix)/opt/fzf/shell/...`); bind `Ctrl+R` for fuzzy history, `Ctrl+T` for fuzzy file insert, `Alt+C` for fuzzy `cd`; guard with `command -v fzf`
-- [ ] T034 [US3] Update `zsh/prompt.zsh`: add `eval "$(zoxide init zsh)"` after Starship init; guard with `command -v zoxide`
+- [x] T027 [US3] Write `zsh/aliases/aliases-git.zsh`: define `gs`→`git status`, `gd`→`git diff`, `gco`→`git checkout`, `gst`→`git stash`, `glog`→`git log --oneline --graph`, `gpush`→`git push`, `gpull`→`git pull`, `gaa`→`git add -A`, `gcm`→`git commit -m`, `gb`→`git branch`, `gbd`→`git branch -d`, `grb`→`git rebase`, `gcp`→`git cherry-pick`, `gsh`→`git show`, `gbl`→`git blame` — include `# g* prefix` domain header comment
+- [x] T028 [P] [US3] Write `zsh/aliases/aliases-system.zsh`: `ll`→`eza -la --icons` (comment: `# original: \ls`), `la`→`eza -a --icons`, `l`→`eza --icons`, `df`→`df -h`, `du`→`du -sh`, `free`→`free -h`, `psg`→`ps aux | grep`, `mkd`→`mkdir -p` — guard eza aliases with `command -v eza` check, fallback to `ls -la`
+- [x] T029 [P] [US3] Write `zsh/aliases/aliases-nav.zsh`: `..`→`cd ..`, `...`→`cd ../..`, `....`→`cd ../../..`, `~`→`cd $HOME`, `dl`→`cd ~/Downloads`, `dt`→`cd ~/Desktop`, `dot`→`cd ~/dotfiles`
+- [x] T030 [P] [US3] Write `zsh/aliases/aliases-docker.zsh`: `dps`→`docker ps`, `dpsa`→`docker ps -a`, `dex`→`docker exec -it`, `drm`→`docker rm`, `dri`→`docker rmi`, `dlog`→`docker logs -f`, `dstop`→`docker stop`, `dprune`→`docker system prune -f` — include `# d* prefix` domain header comment
+- [x] T031 [P] [US3] Write `zsh/aliases/aliases-editor.zsh`: `vim`→`nvim` (comment: `# original: \vim`), `v`→`nvim`, `e`→`$EDITOR` — guard with `command -v nvim` check
+- [x] T032 [US3] Update `zsh/.zshrc` orchestrator: add `for f in "$ZDOTDIR/aliases/"aliases-*.zsh; do source "$f"; done` loop after `plugins.zsh` sourcing; source `~/.aliases.local` if it exists
+- [x] T033 [US3] Update `zsh/keybindings.zsh`: add fzf shell integration — source fzf keybindings file (`/usr/share/doc/fzf/examples/key-bindings.zsh` or `$(brew --prefix)/opt/fzf/shell/...`); bind `Ctrl+R` for fuzzy history, `Ctrl+T` for fuzzy file insert, `Alt+C` for fuzzy `cd`; guard with `command -v fzf`
+- [x] T034 [US3] Update `zsh/prompt.zsh`: add `eval "$(zoxide init zsh)"` after Starship init; guard with `command -v zoxide`
 - [ ] T035 [US3] Smoke test all alias domains: open fresh Zsh session; run `type gs` → must show git status alias; run `type ll` → must show eza alias; run `type dps` → must show docker ps alias; run `type vim` → must show nvim alias; run `z dot` → must navigate to `~/dotfiles`; run `Ctrl+R` → fzf history widget must open
 
 **Checkpoint**: User Story 3 fully functional — inline suggestions, syntax highlighting, all
@@ -133,13 +133,13 @@ one zsh feature) using only the README.
 
 ### Implementation for User Story 4
 
-- [ ] T036 [US4] Write `README.md` Quick Start section per `data-model.md` README entity: prerequisites (Ubuntu 22.04+, sudo, internet, Nerd Font), clone command, `bash install.sh`, `chsh -s $(which zsh)`, open new terminal, open tmux + press `<prefix>+I`, verify benchmark
-- [ ] T037 [P] [US4] Write `README.md` What's Installed table: one row per required tool (zsh, Oh My Zsh, Starship, fzf, zoxide, zsh-autosuggestions, zsh-syntax-highlighting, tmux, TPM, catppuccin-tmux, bat, eza, jq, neovim optional) — columns: Tool | Purpose | Key Command
-- [ ] T038 [P] [US4] Write `README.md` Alias Reference: one table per domain mirroring exact aliases from `zsh/aliases/*.zsh` — columns: Alias | Expansion | Use Case; sections: Git Aliases, System Aliases, Navigation Aliases, Docker Aliases, Editor Aliases
-- [ ] T039 [US4] Write `README.md` Tmux Cheatsheet table: list every key binding from `tmux/.tmux.conf` — columns: Keys | Action; sections: Prefix, Panes, Windows, Sessions, Mouse
-- [ ] T040 [P] [US4] Write `README.md` Zsh Features section: inline autosuggestions (accept with `→`), syntax highlighting (green/red), fzf (`Ctrl+R` history, `Ctrl+T` file, `Alt+C` cd), zoxide (`z <partial>`, `zi` interactive)
-- [ ] T041 [P] [US4] Write `README.md` Customization section: explain `~/.zshrc.local` (sourced last by `.zshrc`) and `~/.aliases.local` (sourced after all alias files); show example content; note both are gitignored and never overwritten by install script
-- [ ] T042 [P] [US4] Write `README.md` Platform Notes section: WSL2 font setup in Windows Terminal settings; clipboard with `xsel`/`xclip` or `win32yank`; note 200ms benchmark is measured inside WSL2 not from Windows host
+- [x] T036 [US4] Write `README.md` Quick Start section per `data-model.md` README entity: prerequisites (Ubuntu 22.04+, sudo, internet, Nerd Font), clone command, `bash install.sh`, `chsh -s $(which zsh)`, open new terminal, open tmux + press `<prefix>+I`, verify benchmark
+- [x] T037 [P] [US4] Write `README.md` What's Installed table: one row per required tool (zsh, Oh My Zsh, Starship, fzf, zoxide, zsh-autosuggestions, zsh-syntax-highlighting, tmux, TPM, catppuccin-tmux, bat, eza, jq, neovim optional) — columns: Tool | Purpose | Key Command
+- [x] T038 [P] [US4] Write `README.md` Alias Reference: one table per domain mirroring exact aliases from `zsh/aliases/*.zsh` — columns: Alias | Expansion | Use Case; sections: Git Aliases, System Aliases, Navigation Aliases, Docker Aliases, Editor Aliases
+- [x] T039 [US4] Write `README.md` Tmux Cheatsheet table: list every key binding from `tmux/.tmux.conf` — columns: Keys | Action; sections: Prefix, Panes, Windows, Sessions, Mouse
+- [x] T040 [P] [US4] Write `README.md` Zsh Features section: inline autosuggestions (accept with `→`), syntax highlighting (green/red), fzf (`Ctrl+R` history, `Ctrl+T` file, `Alt+C` cd), zoxide (`z <partial>`, `zi` interactive)
+- [x] T041 [P] [US4] Write `README.md` Customization section: explain `~/.zshrc.local` (sourced last by `.zshrc`) and `~/.aliases.local` (sourced after all alias files); show example content; note both are gitignored and never overwritten by install script
+- [x] T042 [P] [US4] Write `README.md` Platform Notes section: WSL2 font setup in Windows Terminal settings; clipboard with `xsel`/`xclip` or `win32yank`; note 200ms benchmark is measured inside WSL2 not from Windows host
 
 **Checkpoint**: User Story 4 fully functional — README reviewed by a peer who installs the
 environment and uses three tools correctly without external help.

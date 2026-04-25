@@ -1,15 +1,20 @@
 # ── Environment variables ─────────────────────────────────────────────────────
 # All exported env vars live here. Tool-specific values added in later phases.
 
-# Editor (populated in US2 — Tmux/Theme phase)
-# export EDITOR=nvim
-# export VISUAL=nvim
+# Editor — nvim if available, fallback to vim
+if command -v nvim &>/dev/null; then
+  export EDITOR=nvim
+  export VISUAL=nvim
+else
+  export EDITOR=vim
+  export VISUAL=vim
+fi
 
-# Pager
-# export PAGER=bat
+# Pager — bat if available for syntax-highlighted output
+command -v bat &>/dev/null && export PAGER=bat
 
-# bat theme (Catppuccin Mocha — populated in US2)
-# export BAT_THEME="Catppuccin-mocha"
+# bat theme (Catppuccin Mocha)
+export BAT_THEME="Catppuccin-mocha"
 
 # History
 export HISTSIZE=10000
