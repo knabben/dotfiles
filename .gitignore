@@ -1,0 +1,15 @@
+# Oh My Zsh — installed by install.sh, not tracked
+.oh-my-zsh/
+
+# Tmux Plugin Manager and its plugins — installed by install.sh / TPM
+.tmux/plugins/
+
+# Local user overrides — never versioned
+.zshrc.local
+.aliases.local
+
+# Editor and OS artifacts
+.DS_Store
+*.swp
+*.swo
+*~
