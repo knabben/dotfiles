@@ -39,6 +39,7 @@ done
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ACTION_ITEMS=()
+export PATH="$HOME/.local/bin:$PATH"
 
 run() {
   if $DRY_RUN; then
@@ -149,6 +150,43 @@ install_packages() {
   for pkg in "${PACKAGES[@]}"; do
     install_package "$pkg"
   done
+}
+
+# ── Debian/Ubuntu binary renames ──────────────────────────────────────────────
+# fd-find installs as `fdfind` and bat installs as `batcat` (name clashes with
+# other Debian packages). Tools that shell out directly (LunarVim's own
+# installer, Telescope's fd/rg finder, bat previews) expect `fd`/`bat`, not
+# the Debian names — a zsh alias doesn't help since it's not a real binary.
+ensure_binary_renames() {
+  echo
+  echo -e "${BOLD}── Fixing up fd/bat binary names ────────────────────────────────${RESET}"
+  run mkdir -p "$HOME/.local/bin"
+
+  if command -v fd &>/dev/null; then
+    skip "fd already resolvable"
+  elif command -v fdfind &>/dev/null; then
+    if $DRY_RUN; then
+      echo "  [dry-run] ln -sf $(command -v fdfind) $HOME/.local/bin/fd"
+    else
+      ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"
+      ok "Symlinked fd -> fdfind"
+    fi
+  else
+    warn "Neither fd nor fdfind found on PATH"
+  fi
+
+  if command -v bat &>/dev/null; then
+    skip "bat already resolvable"
+  elif command -v batcat &>/dev/null; then
+    if $DRY_RUN; then
+      echo "  [dry-run] ln -sf $(command -v batcat) $HOME/.local/bin/bat"
+    else
+      ln -sf "$(command -v batcat)" "$HOME/.local/bin/bat"
+      ok "Symlinked bat -> batcat"
+    fi
+  else
+    warn "Neither bat nor batcat found on PATH"
+  fi
 }
 
 # ── Oh My Zsh ─────────────────────────────────────────────────────────────────
@@ -315,6 +353,7 @@ main() {
 
   if ! $SKIP_PACKAGES; then
     install_packages
+    ensure_binary_renames
     install_starship
     install_omz
     install_tpm
