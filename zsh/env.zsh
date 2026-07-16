@@ -1,8 +1,11 @@
 # ── Environment variables ─────────────────────────────────────────────────────
 # All exported env vars live here. Tool-specific values added in later phases.
 
-# Editor — nvim if available, fallback to vim
-if (( $+commands[nvim] )); then
+# Editor — lvim (LunarVim) if available, fallback nvim, fallback vim
+if (( $+commands[lvim] )); then
+  export EDITOR=lvim
+  export VISUAL=lvim
+elif (( $+commands[nvim] )); then
   export EDITOR=nvim
   export VISUAL=nvim
 else

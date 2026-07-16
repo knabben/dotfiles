@@ -71,6 +71,17 @@ PACKAGES=(
   "zoxide"
   "eza"
   "neovim:nvim"
+  "ripgrep:rg"
+  "fd-find:fd"
+  "python3"
+  "python3-venv"
+  "nodejs"
+  "npm"
+  "build-essential"
+  "golang-go"
+  "python3-pip"
+  "shellcheck"
+  "shfmt"
 )
 
 # ── Starship (official install script — not in Ubuntu apt repos) ───────────────
@@ -99,14 +110,14 @@ install_package() {
   snap_name="${1##*:}"
   [[ "$snap_name" == "$apt_name" ]] && snap_name="$apt_name"
 
-  if $DRY_RUN; then
-    echo "  [dry-run] apt-get install -y $apt_name (snap fallback: $snap_name)"
-    return 0
-  fi
-
   # Skip if already installed at the candidate version
   if dpkg-query -W -f='${Status}' "$apt_name" 2>/dev/null | grep -q "install ok installed"; then
     skip "$apt_name already installed"
+    return 0
+  fi
+
+  if $DRY_RUN; then
+    echo "  [dry-run] apt-get install -y $apt_name (snap fallback: $snap_name)"
     return 0
   fi
 
@@ -130,7 +141,11 @@ install_package() {
 install_packages() {
   echo
   echo -e "${BOLD}── Installing packages ──────────────────────────────────────────${RESET}"
-  sudo apt-get update -qq 2>/dev/null || warn "apt-get update failed; package list may be stale"
+  if $DRY_RUN; then
+    echo "  [dry-run] apt-get update"
+  else
+    sudo apt-get update -qq 2>/dev/null || warn "apt-get update failed; package list may be stale"
+  fi
   for pkg in "${PACKAGES[@]}"; do
     install_package "$pkg"
   done
@@ -187,6 +202,27 @@ install_tpm() {
   ACTION_ITEMS+=("Open tmux and press <prefix>+I (Ctrl+a then I) to install tmux plugins")
 }
 
+# ── LunarVim (IDE-layer on top of Neovim, with Claude Code integration) ──────
+install_lunarvim() {
+  echo
+  echo -e "${BOLD}── Installing LunarVim ──────────────────────────────────────────${RESET}"
+  if command -v lvim &>/dev/null; then
+    skip "LunarVim already installed ($(lvim --version 2>/dev/null | head -1))"
+    return
+  fi
+  if $DRY_RUN; then
+    echo "  [dry-run] LV_BRANCH='master' bash <(curl -fsSL https://raw.githubusercontent.com/LunarVim/LunarVim/master/utils/installer/install.sh) -y"
+    return
+  fi
+  LV_BRANCH='master' bash -c \
+    "$(curl -fsSL https://raw.githubusercontent.com/LunarVim/LunarVim/master/utils/installer/install.sh)" \
+    "" -y &>/dev/null \
+    && ok "LunarVim installed" \
+    || { warn "LunarVim install failed — run manually: LV_BRANCH='master' bash <(curl -fsSL https://raw.githubusercontent.com/LunarVim/LunarVim/master/utils/installer/install.sh) -y"; \
+         ACTION_ITEMS+=("Install LunarVim manually (see README for the command)"); return; }
+  ACTION_ITEMS+=("Run 'lvim' once so it can sync plugins (claudecode.nvim needs the 'claude' CLI already on PATH)")
+}
+
 # ── Symlink management ────────────────────────────────────────────────────────
 # Format: "repo-relative-source:home-relative-target"
 SYMLINKS=(
@@ -194,6 +230,7 @@ SYMLINKS=(
   "zsh/.zshrc:.zshrc"
   "tmux/.tmux.conf:.tmux.conf"
   "starship/starship.toml:.config/starship.toml"
+  "lunarvim/config.lua:.config/lvim/config.lua"
 )
 
 prompt_overwrite() {
@@ -281,6 +318,7 @@ main() {
     install_starship
     install_omz
     install_tpm
+    install_lunarvim
   fi
 
   create_symlinks

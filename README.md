@@ -78,7 +78,8 @@ time zsh -i -c exit
 | **bat** | Syntax-highlighted `cat` | `bat <file>` |
 | **eza** | Modern `ls` with icons and git status | `ll` · `la` · `lt` |
 | **jq** | JSON processing | `jq '.' file.json` |
-| **neovim** *(optional)* | Editor | `vim` · `v` · `nvim` |
+| **neovim** | Editor engine | `nvim` |
+| **LunarVim** | Default editor — full IDE: Claude Code integration, Supermaven AI autocomplete, Go/Shell/Python LSP+lint+format+debug | `vim` · `v` · `lvim` |
 
 ---
 
@@ -161,10 +162,13 @@ time zsh -i -c exit
 
 | Alias | Expansion | Use Case |
 |-------|-----------|---------|
-| `vim` | `nvim` | Open neovim (escape: `\vim`) |
-| `vi` | `nvim` | Open neovim (escape: `\vi`) |
-| `v` | `nvim` | Short neovim alias |
-| `e` | `$EDITOR` | Open with configured editor |
+| `vim` | `lvim` (fallback `nvim`) | Open LunarVim (escape: `\vim`) |
+| `vi` | `lvim` (fallback `nvim`) | Open LunarVim (escape: `\vi`) |
+| `v` | `lvim` (fallback `nvim`) | Short LunarVim alias |
+| `e` | `$EDITOR` | Open with configured editor (`lvim` by default) |
+
+See **[`lunarvim/README.md`](lunarvim/README.md)** for the full LunarVim +
+Claude Code shortcut and usage reference.
 
 ---
 
