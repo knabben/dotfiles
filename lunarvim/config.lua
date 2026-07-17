@@ -134,7 +134,16 @@ lvim.plugins = {
   -- DAP debugging for Go and Python (uses delve/debugpy installed above)
   { "leoluz/nvim-dap-go", ft = "go" },
   { "mfussenegger/nvim-dap-python", ft = "python" },
+
+  -- none-ls.nvim dropped several builtins (incl. ruff) as "unmaintained"
+  -- (nvimtools/none-ls.nvim#77); none-ls-extras.nvim is the upstream-endorsed
+  -- home for them now. It ships them as ready source objects rather than
+  -- entries in null_ls.builtins, so patch the table below before
+  -- linters.setup (which does a name lookup there) runs.
+  { "nvimtools/none-ls-extras.nvim" },
 }
+
+require("null-ls").builtins.diagnostics.ruff = require "none-ls.diagnostics.ruff"
 
 -- ── Formatters (null-ls) ────────────────────────────────────────────────────
 local formatters = require "lvim.lsp.null-ls.formatters"
@@ -148,9 +157,11 @@ formatters.setup {
 
 -- ── Linters (null-ls) ────────────────────────────────────────────────────────
 local linters = require "lvim.lsp.null-ls.linters"
+-- shellcheck diagnostics come from bashls (bash-language-server), which
+-- shells out to the shellcheck binary itself — none-ls.nvim dropped its own
+-- shellcheck source in favor of that (nvimtools/none-ls.nvim#58).
 linters.setup {
   { command = "golangci-lint", filetypes = { "go" } },
-  { command = "shellcheck", filetypes = { "sh", "bash" } },
   { command = "ruff", filetypes = { "python" } },
 }
 
